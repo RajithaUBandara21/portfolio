@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+out
+build
+coverage
+test-results
+playwright-report
+public/uploads/*
+!public/uploads/.gitkeep
+.env
+.env.*
+!.env.example
+npm-debug.log*
+*.md
+.vscode
+.idea
