@@ -48,6 +48,8 @@ yarn-error.log*
 
 # local Claude Code session state, not project content
 /.claude/
+/.agents/
+skills-lock.json
 
 # typescript
 *.tsbuildinfo
