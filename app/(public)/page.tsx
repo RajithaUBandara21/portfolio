@@ -125,21 +125,27 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <div className="shrink-0 self-center sm:self-auto">
-          {profile?.avatarUrl ? (
-            <Image
-              src={profile.avatarUrl}
-              alt={fullName}
-              width={192}
-              height={192}
-              className="ring-background size-40 rounded-full object-cover shadow-xl ring-4 sm:size-48"
-              priority
-            />
-          ) : (
-            <div className="bg-muted ring-background flex size-40 items-center justify-center rounded-full text-4xl font-semibold shadow-xl ring-4 sm:size-48">
-              {initials(fullName)}
-            </div>
-          )}
+        <div className="relative shrink-0 self-center sm:self-auto">
+          <div
+            aria-hidden
+            className="bg-primary/25 absolute inset-0 -z-10 scale-90 rounded-full blur-2xl"
+          />
+          <div className="from-primary/70 via-primary/20 to-primary/70 rounded-full bg-linear-to-br p-0.75 shadow-2xl">
+            {profile?.avatarUrl ? (
+              <Image
+                src={profile.avatarUrl}
+                alt={fullName}
+                width={256}
+                height={256}
+                className="ring-background size-48 rounded-full object-cover ring-4 sm:size-56 lg:size-64"
+                priority
+              />
+            ) : (
+              <div className="bg-muted ring-background flex size-48 items-center justify-center rounded-full text-5xl font-semibold ring-4 sm:size-56 lg:size-64">
+                {initials(fullName)}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
