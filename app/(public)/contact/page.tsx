@@ -1,11 +1,18 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Link2, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import type { ComponentType, SVGProps } from "react";
 
 import { ContactForm } from "@/components/contact/contact-form";
+import { GithubIcon, LinkedinIcon } from "@/components/icons/social-icons";
 import { getProfile } from "@/features/profile/queries";
 
 const description = "Get in touch to discuss opportunities or collaboration.";
+
+const SOCIAL_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  github: GithubIcon,
+  linkedin: LinkedinIcon,
+};
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -60,21 +67,22 @@ export default async function ContactPage() {
                 <span>{profile.location}</span>
               </div>
             ) : null}
-            {profile?.socialLinks.map((link) => (
-              <div key={link.id} className="flex items-center gap-3">
-                <span className="text-muted-foreground w-4 shrink-0 text-center text-xs capitalize">
-                  {link.platform.slice(0, 1)}
-                </span>
-                <Link
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground truncate underline-offset-4 hover:underline"
-                >
-                  {link.url}
-                </Link>
-              </div>
-            ))}
+            {profile?.socialLinks.map((link) => {
+              const Icon = SOCIAL_ICONS[link.platform.toLowerCase()] ?? Link2;
+              return (
+                <div key={link.id} className="flex items-center gap-3">
+                  <Icon className="text-muted-foreground size-4 shrink-0" aria-hidden />
+                  <Link
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-foreground truncate underline-offset-4 hover:underline"
+                  >
+                    {link.url}
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
