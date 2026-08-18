@@ -37,6 +37,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createSkillAction, deleteSkillAction, updateSkillAction } from "@/features/skills/actions";
 import {
   type SkillInput,
+  skillCategoryLabels,
   skillCategoryValues,
   skillLevelValues,
   skillSchema,
@@ -113,7 +114,7 @@ function SkillFormFields({
             <SelectContent>
               {skillCategoryValues.map((c) => (
                 <SelectItem key={c} value={c}>
-                  {c}
+                  {skillCategoryLabels[c]}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -214,7 +215,7 @@ export function SkillManager({ skills }: { skills: Skill[] }) {
               <TableRow key={skill.id}>
                 <TableCell className="font-medium">{skill.name}</TableCell>
                 <TableCell>
-                  <Badge variant="outline">{skill.category}</Badge>
+                  <Badge variant="outline">{skillCategoryLabels[skill.category]}</Badge>
                 </TableCell>
                 <TableCell>{skill.level}</TableCell>
                 <TableCell className="flex justify-end gap-2">

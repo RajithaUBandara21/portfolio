@@ -40,6 +40,8 @@ enum ProjectStatus {
 enum SkillCategory {
   LANGUAGE
   FRAMEWORK
+  LIBRARY
+  RUNTIME_ENVIRONMENT
   DATABASE
   CLOUD_DEVOPS
   TOOLING

@@ -13,6 +13,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { skillCategoryLabels } from "@/schemas/skill.schema";
 
 export interface SkillWithProjects {
   id: string;
@@ -23,16 +24,6 @@ export interface SkillWithProjects {
   description: string | null;
   projects: Array<{ id: string; slug: string; title: string; shortDescription: string }>;
 }
-
-const CATEGORY_LABELS: Record<string, string> = {
-  LANGUAGE: "Languages",
-  FRAMEWORK: "Frameworks",
-  DATABASE: "Databases",
-  CLOUD_DEVOPS: "Cloud & DevOps",
-  TOOLING: "Tooling",
-  SOFT_SKILL: "Soft skills",
-  OTHER: "Other",
-};
 
 export function SkillsExplorer({ skills }: { skills: SkillWithProjects[] }) {
   const [selected, setSelected] = useState<SkillWithProjects | null>(null);
@@ -63,7 +54,7 @@ export function SkillsExplorer({ skills }: { skills: SkillWithProjects[] }) {
       {Object.entries(grouped).map(([category, categorySkills]) => (
         <div key={category} className="space-y-3">
           <h2 className="text-muted-foreground text-sm font-medium tracking-wide uppercase">
-            {CATEGORY_LABELS[category] ?? category}
+            {skillCategoryLabels[category as keyof typeof skillCategoryLabels] ?? category}
           </h2>
           <div className="flex flex-wrap gap-2">
             {categorySkills.map((skill) => (

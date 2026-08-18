@@ -3,12 +3,28 @@ import { z } from "zod";
 export const skillCategoryValues = [
   "LANGUAGE",
   "FRAMEWORK",
+  "LIBRARY",
+  "RUNTIME_ENVIRONMENT",
   "DATABASE",
   "CLOUD_DEVOPS",
   "TOOLING",
   "SOFT_SKILL",
   "OTHER",
 ] as const;
+
+// Single source of truth for human-readable category labels — used by both the admin
+// category picker and the public skills page grouping headers.
+export const skillCategoryLabels: Record<(typeof skillCategoryValues)[number], string> = {
+  LANGUAGE: "Languages",
+  FRAMEWORK: "Frameworks",
+  LIBRARY: "Libraries",
+  RUNTIME_ENVIRONMENT: "Runtime Environments",
+  DATABASE: "Databases",
+  CLOUD_DEVOPS: "Cloud & DevOps",
+  TOOLING: "Tooling",
+  SOFT_SKILL: "Soft Skills",
+  OTHER: "Other",
+};
 
 export const skillLevelValues = ["FAMILIAR", "PROFICIENT", "ADVANCED", "EXPERT"] as const;
 

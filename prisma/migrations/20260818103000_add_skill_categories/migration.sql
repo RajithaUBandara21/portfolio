@@ -1,0 +1,3 @@
+-- AlterEnum
+ALTER TYPE "SkillCategory" ADD VALUE 'LIBRARY';
+ALTER TYPE "SkillCategory" ADD VALUE 'RUNTIME_ENVIRONMENT';
