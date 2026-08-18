@@ -20,6 +20,7 @@ export const profileSchema = z.object({
   fullName: z.string().min(1, "Full name is required").max(120),
   headline: z.string().min(1, "Headline is required").max(160),
   bio: z.string().min(1, "Bio is required").max(5000),
+  aboutContent: z.string().max(10000).optional().or(z.literal("")),
   // Not `.url()`: these are populated by file upload, which returns a relative `/uploads/...`
   // path in local dev (no cloud blob storage configured) or an absolute URL in production.
   avatarUrl: z.string().optional().or(z.literal("")),

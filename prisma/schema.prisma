@@ -111,6 +111,7 @@ model Profile {
   fullName        String
   headline        String
   bio             String       @db.Text
+  aboutContent    String?      @db.Text
   avatarUrl       String?
   resumeUrl       String?
   location        String?

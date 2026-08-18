@@ -65,7 +65,25 @@ export function ProfileForm({ defaultValues }: { defaultValues: ProfileInput }) 
       <div className="flex flex-col gap-2">
         <Label htmlFor="bio">Bio</Label>
         <Textarea id="bio" rows={6} {...register("bio")} aria-invalid={Boolean(errors.bio)} />
+        <p className="text-muted-foreground text-xs">Short summary shown on the homepage.</p>
         {errors.bio ? <p className="text-destructive text-sm">{errors.bio.message}</p> : null}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="aboutContent">About page content</Label>
+        <Textarea
+          id="aboutContent"
+          rows={12}
+          {...register("aboutContent")}
+          aria-invalid={Boolean(errors.aboutContent)}
+        />
+        <p className="text-muted-foreground text-xs">
+          Longer background story shown on the About page. Falls back to the bio above if left
+          blank.
+        </p>
+        {errors.aboutContent ? (
+          <p className="text-destructive text-sm">{errors.aboutContent.message}</p>
+        ) : null}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

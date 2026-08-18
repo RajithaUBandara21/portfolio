@@ -9,6 +9,7 @@ export default async function AdminProfilePage() {
     fullName: profile?.fullName ?? "",
     headline: profile?.headline ?? "",
     bio: profile?.bio ?? "",
+    aboutContent: profile?.aboutContent ?? "",
     avatarUrl: profile?.avatarUrl ?? "",
     resumeUrl: profile?.resumeUrl ?? "",
     location: profile?.location ?? "",

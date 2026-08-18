@@ -19,7 +19,7 @@ export default async function AboutPage() {
     <div className="mx-auto max-w-3xl space-y-6 px-4 py-16">
       <h1 className="text-3xl font-bold tracking-tight">About</h1>
       <div className="text-muted-foreground space-y-4 leading-relaxed whitespace-pre-line">
-        {profile?.bio ?? "TODO: Add a bio in the admin CMS."}
+        {profile?.aboutContent || profile?.bio || "TODO: Add a bio in the admin CMS."}
       </div>
       {profile?.location ? (
         <p className="text-muted-foreground text-sm">Based in {profile.location}</p>

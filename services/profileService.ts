@@ -14,6 +14,7 @@ export interface UpsertProfileInput {
   fullName: string;
   headline: string;
   bio: string;
+  aboutContent?: string | null;
   avatarUrl?: string | null;
   resumeUrl?: string | null;
   location?: string | null;
@@ -34,6 +35,7 @@ export async function upsertProfile(input: UpsertProfileInput): Promise<ProfileW
     fullName: input.fullName,
     headline: input.headline,
     bio: input.bio,
+    aboutContent: input.aboutContent || null,
     avatarUrl: input.avatarUrl || null,
     resumeUrl: input.resumeUrl || null,
     location: input.location || null,
