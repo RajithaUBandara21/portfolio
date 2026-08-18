@@ -48,7 +48,10 @@ const uploadsHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // "standalone" packages a self-contained server for Docker self-hosting. Vercel does its own
+  // output packaging and this option actively conflicts with it (missing .nft.json trace files
+  // at build time), so only apply it outside of Vercel's build environment.
+  output: process.env.VERCEL ? undefined : "standalone",
   turbopack: {
     root: path.resolve(__dirname),
   },
