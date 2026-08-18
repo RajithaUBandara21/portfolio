@@ -39,6 +39,7 @@ enum ProjectStatus {
 
 enum SkillCategory {
   LANGUAGE
+  AI_ML
   FRAMEWORK
   LIBRARY
   RUNTIME_ENVIRONMENT

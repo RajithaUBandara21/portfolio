@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const skillCategoryValues = [
   "LANGUAGE",
+  "AI_ML",
   "FRAMEWORK",
   "LIBRARY",
   "RUNTIME_ENVIRONMENT",
@@ -16,6 +17,7 @@ export const skillCategoryValues = [
 // category picker and the public skills page grouping headers.
 export const skillCategoryLabels: Record<(typeof skillCategoryValues)[number], string> = {
   LANGUAGE: "Languages",
+  AI_ML: "AI & ML",
   FRAMEWORK: "Frameworks",
   LIBRARY: "Libraries",
   RUNTIME_ENVIRONMENT: "Runtime Environments",
