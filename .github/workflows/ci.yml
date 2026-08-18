@@ -11,6 +11,11 @@ env:
   # Only the (future) E2E job needs Playwright's browser binaries; skip the download
   # everywhere else so `npm ci` doesn't pull ~300MB it will never use.
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+  # prisma.config.ts reads DIRECT_URL at load time, so even jobs that never touch a
+  # database (lint/typecheck, unit tests) need it resolvable for the postinstall
+  # `prisma generate` step to run. Jobs that need a real database override these.
+  DATABASE_URL: postgresql://portfolio:portfolio@localhost:5432/portfolio?schema=public
+  DIRECT_URL: postgresql://portfolio:portfolio@localhost:5432/portfolio?schema=public
 
 jobs:
   lint-and-typecheck:
