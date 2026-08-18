@@ -18,6 +18,7 @@ export interface UpsertProfileInput {
   resumeUrl?: string | null;
   location?: string | null;
   email?: string | null;
+  phone?: string | null;
   availability?: string | null;
   yearsExperience?: number | null;
   socialLinks: Array<{ platform: string; url: string; order: number }>;
@@ -37,6 +38,7 @@ export async function upsertProfile(input: UpsertProfileInput): Promise<ProfileW
     resumeUrl: input.resumeUrl || null,
     location: input.location || null,
     email: input.email || null,
+    phone: input.phone || null,
     availability: input.availability || null,
     yearsExperience: input.yearsExperience ?? null,
   };

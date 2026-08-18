@@ -112,6 +112,7 @@ model Profile {
   resumeUrl       String?
   location        String?
   email           String?
+  phone           String?
   availability    String?
   yearsExperience Int?
   updatedAt       DateTime     @updatedAt

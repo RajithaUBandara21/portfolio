@@ -26,6 +26,7 @@ export const profileSchema = z.object({
   resumeUrl: z.string().optional().or(z.literal("")),
   location: z.string().max(120).optional().or(z.literal("")),
   email: z.string().email().optional().or(z.literal("")),
+  phone: z.string().max(40).optional().or(z.literal("")),
   availability: z.string().max(160).optional().or(z.literal("")),
   yearsExperience: optionalYearsExperience,
   socialLinks: z.array(socialLinkSchema),

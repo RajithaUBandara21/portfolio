@@ -1,3 +1,4 @@
+import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -28,34 +29,53 @@ export default async function ContactPage() {
 
       <div className="grid gap-10 sm:grid-cols-2">
         <ContactForm />
-        <div className="space-y-3 text-sm">
-          {profile?.email ? (
-            <p>
-              <span className="text-muted-foreground">Email: </span>
-              <Link href={`mailto:${profile.email}`} className="underline underline-offset-4">
-                {profile.email}
-              </Link>
-            </p>
-          ) : null}
-          {profile?.location ? (
-            <p>
-              <span className="text-muted-foreground">Location: </span>
-              {profile.location}
-            </p>
-          ) : null}
-          {profile?.socialLinks.map((link) => (
-            <p key={link.id}>
-              <span className="text-muted-foreground capitalize">{link.platform}: </span>
-              <Link
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline underline-offset-4"
-              >
-                {link.url}
-              </Link>
-            </p>
-          ))}
+        <div className="space-y-4 text-sm">
+          <h2 className="font-medium">Other ways to reach me</h2>
+          <div className="space-y-3">
+            {profile?.email ? (
+              <div className="flex items-center gap-3">
+                <Mail className="text-muted-foreground size-4 shrink-0" aria-hidden />
+                <Link
+                  href={`mailto:${profile.email}`}
+                  className="hover:text-foreground underline-offset-4 hover:underline"
+                >
+                  {profile.email}
+                </Link>
+              </div>
+            ) : null}
+            {profile?.phone ? (
+              <div className="flex items-center gap-3">
+                <Phone className="text-muted-foreground size-4 shrink-0" aria-hidden />
+                <Link
+                  href={`tel:${profile.phone}`}
+                  className="hover:text-foreground underline-offset-4 hover:underline"
+                >
+                  {profile.phone}
+                </Link>
+              </div>
+            ) : null}
+            {profile?.location ? (
+              <div className="flex items-center gap-3">
+                <MapPin className="text-muted-foreground size-4 shrink-0" aria-hidden />
+                <span>{profile.location}</span>
+              </div>
+            ) : null}
+            {profile?.socialLinks.map((link) => (
+              <div key={link.id} className="flex items-center gap-3">
+                <span className="text-muted-foreground w-4 shrink-0 text-center text-xs capitalize">
+                  {link.platform.slice(0, 1)}
+                </span>
+                <Link
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground truncate underline-offset-4 hover:underline"
+                >
+                  {link.url}
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

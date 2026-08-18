@@ -79,6 +79,11 @@ export function ProfileForm({ defaultValues }: { defaultValues: ProfileInput }) 
           {errors.email ? <p className="text-destructive text-sm">{errors.email.message}</p> : null}
         </div>
         <div className="flex flex-col gap-2">
+          <Label htmlFor="phone">Phone</Label>
+          <Input id="phone" type="tel" {...register("phone")} />
+          {errors.phone ? <p className="text-destructive text-sm">{errors.phone.message}</p> : null}
+        </div>
+        <div className="flex flex-col gap-2">
           <Label htmlFor="availability">Availability</Label>
           <Input id="availability" {...register("availability")} />
         </div>

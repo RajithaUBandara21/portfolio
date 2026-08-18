@@ -13,6 +13,7 @@ export default async function AdminProfilePage() {
     resumeUrl: profile?.resumeUrl ?? "",
     location: profile?.location ?? "",
     email: profile?.email ?? "",
+    phone: profile?.phone ?? "",
     availability: profile?.availability ?? "",
     yearsExperience: profile?.yearsExperience ?? undefined,
     socialLinks:
