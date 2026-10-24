@@ -54,3 +54,6 @@ skills-lock.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# personal project write-up workflow, not part of the shipped site
+/docs/

@@ -58,8 +58,12 @@ export async function findRelatedPosts(
   });
 }
 
+// Only tags attached to at least one published post, so empty categories stay hidden.
 export function listAllTags() {
-  return db.blogTag.findMany({ orderBy: { name: "asc" } });
+  return db.blogTag.findMany({
+    where: { posts: { some: { post: { contentStatus: "PUBLISHED" } } } },
+    orderBy: { name: "asc" },
+  });
 }
 
 export function listPostsForAdmin() {
