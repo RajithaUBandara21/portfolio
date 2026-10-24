@@ -6,16 +6,22 @@ import { toast } from "sonner";
 import type { ContentStatus } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
-import { deletePostAction, setPostStatusAction } from "@/features/blog/actions";
+import {
+  deletePostAction,
+  setPostFeaturedAction,
+  setPostStatusAction,
+} from "@/features/blog/actions";
 
 export function BlogRowActions({
   id,
   title,
   contentStatus,
+  featured,
 }: {
   id: string;
   title: string;
   contentStatus: ContentStatus;
+  featured: boolean;
 }) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
@@ -26,6 +32,17 @@ export function BlogRowActions({
       id,
       contentStatus === "PUBLISHED" ? "DRAFT" : "PUBLISHED",
     );
+    setPending(false);
+    if (!result.success) {
+      toast.error(result.error);
+      return;
+    }
+    router.refresh();
+  }
+
+  async function toggleFeatured() {
+    setPending(true);
+    const result = await setPostFeaturedAction(id, !featured);
     setPending(false);
     if (!result.success) {
       toast.error(result.error);
@@ -49,6 +66,9 @@ export function BlogRowActions({
 
   return (
     <div className="flex justify-end gap-2">
+      <Button variant="outline" size="sm" disabled={pending} onClick={toggleFeatured}>
+        {featured ? "Unfeature" : "Feature"}
+      </Button>
       <Button variant="outline" size="sm" disabled={pending} onClick={togglePublish}>
         {contentStatus === "PUBLISHED" ? "Unpublish" : "Publish"}
       </Button>

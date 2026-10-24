@@ -10,6 +10,7 @@ import { FileUploader } from "@/components/admin/file-uploader";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -165,21 +166,31 @@ export function BlogPostForm({
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="post-status">Publish status</Label>
-        <Select
-          defaultValue={defaultValues.contentStatus}
-          onValueChange={(v) => setValue("contentStatus", v as BlogPostInput["contentStatus"])}
-        >
-          <SelectTrigger id="post-status" className="w-48">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="DRAFT">DRAFT</SelectItem>
-            <SelectItem value="PUBLISHED">PUBLISHED</SelectItem>
-            <SelectItem value="ARCHIVED">ARCHIVED</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="flex flex-wrap items-end gap-6">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="post-status">Publish status</Label>
+          <Select
+            defaultValue={defaultValues.contentStatus}
+            onValueChange={(v) => setValue("contentStatus", v as BlogPostInput["contentStatus"])}
+          >
+            <SelectTrigger id="post-status" className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="DRAFT">DRAFT</SelectItem>
+              <SelectItem value="PUBLISHED">PUBLISHED</SelectItem>
+              <SelectItem value="ARCHIVED">ARCHIVED</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-2 pb-2">
+          <Checkbox
+            id="post-featured"
+            checked={watch("featured")}
+            onCheckedChange={(checked) => setValue("featured", checked === true)}
+          />
+          <Label htmlFor="post-featured">Featured</Label>
+        </div>
       </div>
 
       <Button type="submit" disabled={isSubmitting}>

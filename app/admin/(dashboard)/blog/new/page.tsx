@@ -8,6 +8,7 @@ const emptyPost: BlogPostInput = {
   contentMdx: "",
   coverImageUrl: "",
   contentStatus: "DRAFT",
+  featured: false,
   tagNames: [],
 };
 

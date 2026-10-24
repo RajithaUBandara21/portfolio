@@ -11,12 +11,14 @@ export type BlogPostWithTags = Prisma.BlogPostGetPayload<{ include: typeof publi
 export interface BlogListFilters {
   tagSlug?: string;
   search?: string;
+  featuredOnly?: boolean;
 }
 
 export function listPublishedPosts(filters: BlogListFilters = {}): Promise<BlogPostWithTags[]> {
   return db.blogPost.findMany({
     where: {
       contentStatus: "PUBLISHED",
+      ...(filters.featuredOnly ? { featured: true } : {}),
       ...(filters.tagSlug ? { tags: { some: { tag: { slug: filters.tagSlug } } } } : {}),
       ...(filters.search
         ? {
@@ -69,7 +71,14 @@ export function listAllTags() {
 export function listPostsForAdmin() {
   return db.blogPost.findMany({
     orderBy: { updatedAt: "desc" },
-    select: { id: true, slug: true, title: true, contentStatus: true, updatedAt: true },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      contentStatus: true,
+      featured: true,
+      updatedAt: true,
+    },
   });
 }
 
@@ -85,6 +94,7 @@ export interface SavePostInput {
   coverImageUrl: string | null;
   readingTimeMin: number;
   contentStatus: BlogPost["contentStatus"];
+  featured: boolean;
   tagNames: string[];
 }
 
@@ -121,6 +131,7 @@ export async function createPost(input: SavePostInput): Promise<{ id: string }> 
         coverImageUrl: input.coverImageUrl,
         readingTimeMin: input.readingTimeMin,
         contentStatus: input.contentStatus,
+        featured: input.featured,
         publishedAt: input.contentStatus === "PUBLISHED" ? new Date() : null,
       },
     });
@@ -153,6 +164,7 @@ export async function updatePost(id: string, input: SavePostInput): Promise<{ id
         coverImageUrl: input.coverImageUrl,
         readingTimeMin: input.readingTimeMin,
         contentStatus: input.contentStatus,
+        featured: input.featured,
         publishedAt: nowPublishing ? new Date() : existing.publishedAt,
       },
     });
@@ -174,7 +186,7 @@ export function deletePost(id: string): Promise<void> {
 
 export async function setPostFlags(
   id: string,
-  flags: { contentStatus: BlogPost["contentStatus"] },
+  flags: { contentStatus?: BlogPost["contentStatus"]; featured?: boolean },
 ) {
   const existing = await db.blogPost.findUniqueOrThrow({
     where: { id },

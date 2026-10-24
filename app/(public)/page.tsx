@@ -9,7 +9,7 @@ import { GithubIcon, LinkedinIcon } from "@/components/icons/social-icons";
 import { JsonLd } from "@/components/json-ld";
 import { ProjectCard } from "@/components/project/project-card";
 import { siteConfig } from "@/config/site";
-import { getPublishedPosts } from "@/features/blog/queries";
+import { getFeaturedPosts, getPublishedPosts } from "@/features/blog/queries";
 import { getProfile } from "@/features/profile/queries";
 import { getFeaturedProjects } from "@/features/projects/queries";
 
@@ -30,12 +30,17 @@ const SOCIAL_ICONS: Record<string, typeof GithubIcon> = {
 };
 
 export default async function HomePage() {
-  const [profile, featuredProjects, recentPosts] = await Promise.all([
+  const [profile, featuredProjects, featuredPosts, publishedPosts] = await Promise.all([
     getProfile(),
     getFeaturedProjects(),
+    getFeaturedPosts(),
     getPublishedPosts(),
   ]);
-  const featuredPosts = recentPosts.slice(0, RECENT_POSTS_LIMIT);
+  // Recent writing skips posts already shown in the featured section.
+  const featuredPostIds = new Set(featuredPosts.map((post) => post.id));
+  const recentPosts = publishedPosts
+    .filter((post) => !featuredPostIds.has(post.id))
+    .slice(0, RECENT_POSTS_LIMIT);
 
   const fullName = profile?.fullName ?? "[Your Name]";
   const headline = profile?.headline ?? "[Your Professional Headline]";
@@ -168,13 +173,29 @@ export default async function HomePage() {
       {featuredPosts.length > 0 ? (
         <section className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold tracking-tight">Recent writing</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Featured writing</h2>
             <Link href="/blog" className="text-muted-foreground hover:text-foreground text-sm">
               View all →
             </Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featuredPosts.map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {recentPosts.length > 0 ? (
+        <section className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-semibold tracking-tight">Recent writing</h2>
+            <Link href="/blog" className="text-muted-foreground hover:text-foreground text-sm">
+              View all →
+            </Link>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {recentPosts.map((post) => (
               <BlogCard key={post.id} post={post} />
             ))}
           </div>

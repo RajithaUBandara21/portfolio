@@ -16,6 +16,7 @@ export default async function EditBlogPostPage({ params }: { params: Promise<{ i
     contentMdx: post.contentMdx,
     coverImageUrl: post.coverImageUrl ?? "",
     contentStatus: post.contentStatus,
+    featured: post.featured,
     tagNames: post.tags.map((t) => t.tag.name),
   };
 

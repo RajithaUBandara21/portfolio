@@ -33,6 +33,7 @@ export default async function AdminBlogPage() {
             <TableRow>
               <TableHead>Title</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Featured</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -49,11 +50,13 @@ export default async function AdminBlogPage() {
                     {post.contentStatus}
                   </Badge>
                 </TableCell>
+                <TableCell>{post.featured ? "Yes" : "—"}</TableCell>
                 <TableCell>
                   <BlogRowActions
                     id={post.id}
                     title={post.title}
                     contentStatus={post.contentStatus}
+                    featured={post.featured}
                   />
                 </TableCell>
               </TableRow>

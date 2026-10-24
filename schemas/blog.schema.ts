@@ -11,6 +11,7 @@ export const blogPostSchema = z.object({
   contentMdx: z.string().min(1, "Content is required"),
   coverImageUrl: z.string().optional().or(z.literal("")),
   contentStatus: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
+  featured: z.boolean(),
   tagNames: z.array(z.string().min(1).max(40)),
 });
 

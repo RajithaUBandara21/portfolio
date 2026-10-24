@@ -19,6 +19,7 @@ function toSaveInput(input: BlogPostInput) {
     coverImageUrl: input.coverImageUrl ? input.coverImageUrl : null,
     readingTimeMin: calculateReadingTimeMinutes(input.contentMdx),
     contentStatus: input.contentStatus,
+    featured: input.featured,
     tagNames: input.tagNames,
   };
 }
@@ -102,6 +103,17 @@ export async function setPostStatusAction(
     return { success: false, error: "Your session has expired. Please sign in again." };
   }
   await setPostFlags(id, { contentStatus });
+  updateTag(BLOG_CACHE_TAG);
+  return { success: true, data: undefined };
+}
+
+export async function setPostFeaturedAction(id: string, featured: boolean): Promise<ActionResult> {
+  try {
+    await requireAdminSession();
+  } catch {
+    return { success: false, error: "Your session has expired. Please sign in again." };
+  }
+  await setPostFlags(id, { featured });
   updateTag(BLOG_CACHE_TAG);
   return { success: true, data: undefined };
 }

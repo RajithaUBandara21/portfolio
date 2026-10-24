@@ -18,6 +18,12 @@ export const getPublishedPosts = unstable_cache(
   { tags: [BLOG_CACHE_TAG] },
 );
 
+export const getFeaturedPosts = unstable_cache(
+  async () => listPublishedPosts({ featuredOnly: true }),
+  ["blog-featured"],
+  { tags: [BLOG_CACHE_TAG] },
+);
+
 export const getPublishedPostBySlug = unstable_cache(
   async (slug: string) => findPublishedPostBySlug(slug),
   ["blog-by-slug"],
