@@ -1,6 +1,6 @@
 "use server";
 
-import { updateTag } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { Prisma } from "@prisma/client";
 
 import { requireAdminSession } from "@/features/auth/session";
@@ -71,6 +71,11 @@ function isUniqueSlugViolation(error: unknown): boolean {
   );
 }
 
+function revalidateProjectPages() {
+  revalidatePath("/projects");
+  revalidatePath("/projects/[slug]", "page");
+}
+
 export async function createProjectAction(
   input: ProjectInput,
 ): Promise<ActionResult<{ id: string }>> {
@@ -88,6 +93,7 @@ export async function createProjectAction(
   try {
     const result = await createProjectRecord(toSaveInput(parsed.data));
     updateTag(PROJECTS_CACHE_TAG);
+    revalidateProjectPages();
     return { success: true, data: result };
   } catch (error) {
     if (isUniqueSlugViolation(error)) {
@@ -115,6 +121,7 @@ export async function updateProjectAction(
   try {
     const result = await updateProjectRecord(id, toSaveInput(parsed.data));
     updateTag(PROJECTS_CACHE_TAG);
+    revalidateProjectPages();
     return { success: true, data: result };
   } catch (error) {
     if (isUniqueSlugViolation(error)) {
@@ -133,6 +140,7 @@ export async function deleteProjectAction(id: string): Promise<ActionResult> {
 
   await deleteProjectRecord(id);
   updateTag(PROJECTS_CACHE_TAG);
+  revalidateProjectPages();
   return { success: true, data: undefined };
 }
 
@@ -148,5 +156,6 @@ export async function setProjectFlagsAction(
 
   await setProjectFlags(id, flags);
   updateTag(PROJECTS_CACHE_TAG);
+  revalidateProjectPages();
   return { success: true, data: undefined };
 }
